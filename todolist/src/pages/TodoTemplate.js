@@ -8,7 +8,11 @@ import { useSelector } from "react-redux";
 import { AiOutlineSetting, AiOutlineMenu } from 'react-icons/ai';
 import { TbNotes } from 'react-icons/tb';
 import { GrPowerReset, GrPrevious } from 'react-icons/gr';
-import { MdOutlinePets, MdPeopleOutline  } from 'react-icons/md';
+import { MdOutlinePets, MdPeopleOutline, MdCalendarMonth } from 'react-icons/md';
+import { BiLogOut } from 'react-icons/bi'
+import useFetch from "../util/useFetch";
+import moment from "moment";
+
 import cinnamon from '../계피_.png';
 
 const Template = styled.div`
@@ -35,7 +39,7 @@ const Template = styled.div`
     transition: 1s;
   }
 
-  .show-menu{
+  .show-menu {
     position: absolute;
     width: 100%;
     height: 80%;
@@ -47,6 +51,11 @@ const Template = styled.div`
     left: 0;
     transition: 1s;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;
+    }
+
+    .titleBox {
+      width: 100%;
+      height: 10%;
     }
 
 `;
@@ -90,6 +99,7 @@ const CompletedTodo = styled.h2`
   text-align: center;
   font-size: 1.2rem;
   font-weight: 400;
+  color: #1B1A17;
 `
 
 
@@ -137,6 +147,10 @@ const MenuLi = styled.li`
     margin-right: 1rem;
     color: black;
   }
+
+  .listTitle {
+    margin-right: 10px;
+  }
 `
 
 const ImgContainer = styled.div`
@@ -166,16 +180,62 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
+const ResetConfirmWrapper = styled.div`
+  width: 100%;
+  height: 140%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: -25%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-function TodoTemplate({children}){
+const ResetConfirm = styled.div`
+  width: 80%;
+  height: 20%;
+  border-radius: 15px;
+  background-color: #DBA39A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .btn {
+    border: none;
+    background-color: #F5EBE0;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    margin: 10px;
+    margin-top: 30px;
+    font-size: 1rem;
+    
+    :hover {
+      border: 2px solid #EA5455;
+    }
+  }
+
+  .alert {
+    font-size: 1.2rem;
+  }
+`
+
+
+
+function TodoTemplate({children, font, setFont}){
   let today = new Date();
   let todayStr = today.toISOString().slice(0, 10);
   const week = ['일', '월', '화', '수', '목', '금', '토'];
   let todayWeek = week[today.getDay()];
   const todos = useSelector((state) => state.todoReducer.todos);
-  let completedTodo = todos.filter((todo) => todo.isCompleted);
+  const { datas, isPending, error } = useFetch('http://localhost:3001/todos');
+  const todayDatas = datas ? datas.filter((data) => data.createdDate === moment().format('YYYY-MM-DD')) : null;
+  let completedTodo = todayDatas ? todayDatas.filter((data) => data.isCompleted) : null;
   const [menuOn, setMenuOn] = useState(false);
   const [imgOn, setImgOn] = useState(false);
+  const [reset, setReset] = useState(false);
 
   const toggleMenu = () => {
     setMenuOn(!menuOn);
@@ -183,6 +243,31 @@ function TodoTemplate({children}){
 
   const toggleImg = () => {
     setImgOn(!imgOn);
+  }
+
+  const changeFont = () => {
+    setFont(!font);
+  }
+
+  const changeReset = () => {
+    setReset(!reset);
+  }
+  
+  const todoReset = () => {
+    if(datas){
+      datas.map((data) => {
+      fetch(`http://localhost:3001/todos/${data.id}`,{
+           method:"DELETE",
+           headers: {
+             'Content-Type': 'application/json'
+         },
+         })
+         .then( () => {
+         })
+         .catch( err => console.log(err) )
+         console.log();
+    })}
+    window.location.reload();
   }
 
   return(
@@ -197,24 +282,41 @@ function TodoTemplate({children}){
         <AiOutlineMenu onClick={toggleMenu} className="menu" size="30" color="#1B1A17"/>
         <Link to="/memolist"><TbNotes className="memo" size="30" color="#1B1A17"/></Link> 
         <NowDate>{todayStr}{`(${todayWeek})`}</NowDate>
-      </Header> 
-      <Title> 오늘의 할 일 </Title>
-      <CompletedTodo>
-        {todos.length? 
-          completedTodo.length !== 0 ?
-           todos.length === completedTodo.length ?
-            '오늘 할 일을 모두 끝냈어요!' 
-            : `${todos.length}개 중 ${completedTodo.length}개 완료!` 
-            : `아직 완료한 일이 없어요!`
-          : `오늘은 할 일이 없어요!`}
-      </CompletedTodo>
-      {children}
+        </Header> 
+        <div className="titleBox">
+        <Title> 오늘의 할 일 </Title>
+        <CompletedTodo>
+          {todayDatas ? todayDatas.length !== 0 ?
+            completedTodo.length !== 0 ?
+            todayDatas.length === completedTodo.length ?
+              '오늘 할 일을 모두 끝냈어요!' 
+              : `${todayDatas.length}개 중 ${completedTodo.length}개 완료!` 
+              : `아직 완료한 일이 없어요!`
+            : `오늘은 할 일이 없어요!`
+          : null}
+        </CompletedTodo>
+        </div>
+        {children}
           <ul className={menuOn ? 'show-menu': 'hide-menu'}>
             <MenuHeader><GrPrevious onClick={toggleMenu} className="previous" color="#1B1A17"/></MenuHeader>
             <StyledLink to="/creator"><MenuLi><MdPeopleOutline className="icon" size="40" color="#1B1A17" />제작자</MenuLi></StyledLink>
-            <MenuLi><GrPowerReset className="icon" size="35" color="#1B1A17"/>초기화하기</MenuLi>
-            <MenuLi>< AiOutlineSetting className="icon" size="35" color="#1B1A17"/>설정</MenuLi>
+            <StyledLink to="/calender"><MenuLi>< MdCalendarMonth className="icon" size="35" color="#1B1A17"/>달력</MenuLi></StyledLink>
             <MenuLi onClick={toggleImg}>< MdOutlinePets className="icon" size="35" color="#1B1A17"/>햄스터 보기</MenuLi>
+            <MenuLi onClick={changeFont}><AiOutlineSetting className="icon" size="35" color="#1B1A17"/>폰트</MenuLi>
+            <MenuLi onClick={changeReset}><GrPowerReset className="icon" size="35" color="#1B1A17"/>초기화하기</MenuLi>
+            {reset ?
+              <ResetConfirmWrapper>
+                <ResetConfirm>
+                  <span className="alert">정말 초기화하시겠습니까?</span>
+                  <div className="btnBox">
+                    <button className="btn yes" onClick={todoReset}>네</button>
+                    <button onClick={changeReset} className="btn no">아니오</button>
+                  </div>
+                </ResetConfirm>
+              </ResetConfirmWrapper> 
+              : null
+            }
+            <StyledLink to="/"><MenuLi><BiLogOut className="icon" size="35" color="#1B1A17"/>로그아웃</MenuLi></StyledLink>
           </ul>
           { imgOn ? 
               <motion.div

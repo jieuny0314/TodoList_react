@@ -4,7 +4,9 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { todoInsert } from '../reducer/Todo';
 import styled from 'styled-components';
+import useFetch from '../util/useFetch';
 // insert 액션 불러오기
+import moment from 'moment';
 
 const TodoInputBox = styled.section`
     border-top: 1px solid #F5EBE0;
@@ -45,7 +47,9 @@ const TodoInputBox = styled.section`
 
 function TodoInsert(){
   const [todoInput, setTodoInput] = useState('');
-  let nextId = useRef(4); // 렌더링이 계속 되면 안되기 때문에 useRef사용
+  const {datas, isPending, error} = useFetch('http://localhost:3001/todos');
+  let dataCount = datas ? datas.length : 0;
+  let nextId = dataCount + 1;
 
   const dispatch = useDispatch();
   // 디스패치를 사용할 수 있게 해주는 Hooks
@@ -67,12 +71,28 @@ function TodoInsert(){
       alert("할 일을 입력해주세요!");
       return;
     }
-
-    dispatch(todoInsert(nextId.current, todoInput));
+    const putData = { id: nextId,
+      text: todoInput, 
+      isCompleted: false, 
+      createdDate: moment().format('YYYY-MM-DD') };
+    dispatch(todoInsert(nextId, todoInput));
     // 액션을 dispatch를 통해 리듀서로 전달한다.
     // 추가 될 할 일의 id와 내가 입력한 값(할 일 텍스트)을 전달한다.
-    nextId.current += 1; // 다음에 들어올 할 일을 위해서 id+1 해준다. 
+    fetch('http://localhost:3001/todos',{
+           method:"POST",
+           body : JSON.stringify(putData),
+           headers: {
+             'Content-Type': 'application/json'
+         },
+         })
+         .then( () => {
+          console.log(putData)
+         })
+         .catch( err => console.log(err) )
+
+    nextId++; // 다음에 들어올 할 일을 위해서 id+1 해준다. 
     onRemove();  
+    window.location.reload();
   } 
 
   return(

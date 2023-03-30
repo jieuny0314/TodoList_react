@@ -12,6 +12,8 @@ const CreatorContainer = styled.div`
   height: 844px;
   background-color: #FEFCF3;
   color: #1B1A17;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  border-radius: 15px;
 `
 
 const Header = styled.div`
@@ -103,7 +105,7 @@ function Creator() {
 
       <CreatorContainer>
         <Header>
-          <Link to='/'><GrPrevious className="previous" size="40"/></Link>
+          <Link to='/main'><GrPrevious className="previous" size="40"/></Link>
           <MdPeopleOutline className="creator" size="40" />
           <h2>제작자</h2>
         </Header>

@@ -44,16 +44,19 @@ const initState = {
       id: 1,
       text: "끝내주게 숨쉬기",
       isCompleted: true,
+      createdDate : '2023-03-27'
     },
     {
       id: 2,
       text: "간지나게 자기",
       isCompleted: false,
+      createdDate : '2023-03-27'
     },
     {
       id: 3,
       text: "작살나게 밥먹기",
       isCompleted: false,
+      createdDate : '2023-03-27'
     },
   ],
   

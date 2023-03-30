@@ -6,6 +6,8 @@ import { FiSquare, FiCheckSquare } from "react-icons/fi";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiPencil } from "react-icons/bi";
 import { useState } from 'react';
+import { isEmpty } from 'ramda';
+import { useIsPresent } from 'framer-motion';
 
 const TodoItemBox = styled.div`
   display: flex;
@@ -48,7 +50,7 @@ const Button = styled.div`
 `;
 
 function TodoItem({todo}) {
-  const {id, text, isCompleted} = todo;
+  const {id, text, isCompleted, createdDate} = todo;
   const [readOnly, setReadOnly] = useState(true);
   const [updateText, setUpdateText] = useState(text);
   const dispatch = useDispatch();
@@ -58,15 +60,75 @@ function TodoItem({todo}) {
     setUpdateText(value);
   }
 
+  const onChangePut = () => {
+    const putData = {  // 기존 데이터를 덮어씌우기 때문에 데이터 전부다 보내줘야한다.
+      'id' : todo.id,
+      "text" : updateText,
+      "isCompleted" : todo.isCompleted,
+      "createdDate" : todo.createdDate,
+    }
+    fetch(`http://localhost:3001/todos/${id}`,{
+         method:"PUT",
+         body : JSON.stringify(putData),
+         headers: {
+           'Content-Type': 'application/json'
+       },
+       })
+       .then( () => {
+        console.log(todo.text);
+       })
+       .catch( err => console.log(err) )
+       window.location.reload();
+  }
+
+  const onCheckbox = () => {
+    const putData = {
+      "id": todo.id,
+      "text": todo.text,
+      "isCompleted": !todo.isCompleted,
+      "createdDate" : todo.createdDate
+    }
+    fetch(`http://localhost:3001/todos/${todo.id}`,{
+         method:"PUT",
+         body : JSON.stringify(putData),
+         headers: {
+           'Content-Type': 'application/json'
+       },
+       })
+       .then( () => {
+        //  navigate(`/blogs/${blog.id}`);
+        //  window.location.reload();
+        console.log(todo.isCompleted)
+        console.log(todo);
+        // window.location.reload();
+       })
+       .catch( err => console.log(err) )
+       window.location.reload();
+  }
+
   const updateTodo = () => {
     if(!isCompleted) {
       setReadOnly(!readOnly);
     }
   };
 
+  const removeTodo = () => {
+    fetch(`http://localhost:3001/todos/${todo.id}`,{
+           method:"DELETE",
+           headers: {
+             'Content-Type': 'application/json'
+         },
+         })
+         .then( () => {
+         })
+         .catch( err => console.log(err) )
+         window.location.reload();
+         
+  }
+
   return(
     <TodoItemBox>
-      <CheckBox onClick={() => dispatch(todoToggle(id))}>
+      <CheckBox onClick={onCheckbox}>
         {isCompleted ? (
           <FiCheckSquare size="25px" />
         ) : (
@@ -79,8 +141,9 @@ function TodoItem({todo}) {
         defaultValue={text} 
         checked={isCompleted} 
         onChange={onChangeText}
-        onBlur={() => dispatch(todoUpdate(id, updateText))}
+        onBlur={onChangePut}
         />
+        {/* {todo.createdDate.slice(5,)} */}
       {/* 나중에 수정기능 위해서 readOnly 선언해준다. */}
       {/* onBlur => TextBox에 포커스가 사라지면 변경된 텍스트 값을 dispatch를 사용해서 스토어에 반영 */}
 
@@ -90,7 +153,7 @@ function TodoItem({todo}) {
         </Button>
       ) : null}
 
-      <Button onClick={() => dispatch(todoRemove(id))}>
+      <Button onClick={removeTodo}>
         <BsFillTrashFill size="25px" color="#e56b6f" />
       </Button>
     </TodoItemBox>

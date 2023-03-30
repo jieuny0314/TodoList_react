@@ -54,7 +54,7 @@ function MemoTemplate(){
 
       <Template>
         <Header>
-        <Link to="/"><GrPrevious className="previous" color="#1B1A17" /></Link>
+        <Link to="/main"><GrPrevious className="previous" color="#1B1A17" /></Link>
           <h2 className="title">메모 저장소</h2>
         </Header>
         <MemoList></MemoList>
