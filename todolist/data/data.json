@@ -2,37 +2,43 @@
   "todos": [
     {
       "id": 1,
-      "text": "안녕",
+      "text": "해바라기씨 먹기",
       "isCompleted": true,
       "createdDate": "2023-03-12"
     },
     {
       "id": 2,
-      "text": "안녕",
+      "text": "쳇바퀴 타기",
       "isCompleted": true,
       "createdDate": "2023-03-17"
     },
     {
       "id": 3,
-      "text": "안녕",
+      "text": "주인 물기",
       "isCompleted": true,
       "createdDate": "2023-03-21"
     },
     {
       "id": 4,
-      "text": "안녕",
+      "text": "하루종일 잠자기",
       "isCompleted": true,
       "createdDate": "2023-03-30"
     },
     {
       "id": 5,
-      "text": "하기싫당",
+      "text": "간식 달라고 떼쓰기",
       "isCompleted": true,
       "createdDate": "2023-03-30"
     },
     {
       "id": 6,
-      "text": "히히",
+      "text": "해바라기씨 먹기",
+      "isCompleted": false,
+      "createdDate": "2023-03-30"
+    },
+    {
+      "id": 7,
+      "text": "쳇바퀴 타기",
       "isCompleted": false,
       "createdDate": "2023-03-30"
     }
@@ -59,24 +65,12 @@
   ],
   "information": [
     {
-      "id": "12345",
-      "password": "678910"
-    },
-    {
-      "id": "abced",
-      "password": "fghik"
-    },
-    {
-      "id": "12346",
-      "password": "12345"
-    },
-    {
-      "id": "1234567",
-      "password": "1234567"
-    },
-    {
       "id": "1234",
       "password": "1234"
+    },
+    {
+      "id": "12345",
+      "password": "12345"
     }
   ]
 }
