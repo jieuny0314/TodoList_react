@@ -5,6 +5,7 @@ import useFetch from "../util/useFetch";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { GrPrevious } from 'react-icons/gr';
+import Hamster from '../계피그림.png';
 
 const PageWrapper = styled.div`
   width: 390px;
@@ -31,6 +32,8 @@ const LoginBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  z-index: 10;
+  margin-top: 20px;
 
   .idBox {
     width: 100%;
@@ -79,8 +82,9 @@ const IdInput = styled.input`
 const PrevBox = styled.div`
   width: 95%;
   position: absolute;
-  top: 22%;
+  top: 40%;
   left: 5%;
+  z-index: 5;
 
   .previous {
     width: 40px;
@@ -110,6 +114,64 @@ const LoginButton = styled.button`
     transition: 0.3s;
     background-color: #EF9F9F;
   }
+`
+
+const TitleBox = styled.div`
+  width: 100%;
+  height: 30%;
+  /* background-color: gray; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  position: relative;
+
+  .titleImg {
+    position: absolute;
+    top: 110px;
+    width: 150px;
+    z-index: 1;
+    margin-top: 30px;
+  }
+`
+
+const Ballon = styled.div`
+    position: relative;
+    width: 280px;
+    height: 180px;
+    top: -135px;
+    background: white;
+    color: white;
+    border-radius: 50%;
+    padding: 12px 12.8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin-top: 60px;
+
+    ::after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 22px solid transparent;
+      border-top-color: white;
+      border-bottom: 0;
+      border-left: 0;
+      margin-left: -11px;
+      margin-bottom: -22px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+
+    .say {
+      color: black;
+      display: block;
+      text-align: center;
+      font-size: 1.5rem;
+    }
 `
 
 function Signup() {
@@ -167,6 +229,10 @@ function Signup() {
       <PrevBox>
         <Link to='/'><GrPrevious className="previous" size="40"/></Link>
       </PrevBox>
+      <TitleBox>
+        <Ballon><span className="say">주인만 내 투두리스트를 <br/>볼 수 있어! </span></Ballon>
+        <img className="titleImg" alt="햄스터그림" src={Hamster} />
+      </TitleBox>
       <LoginBox>
         <Title>회원가입</Title>
         <div className="idBox"><span>아이디</span><IdInput onChange={idChange} /></div>

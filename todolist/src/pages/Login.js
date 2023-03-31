@@ -34,6 +34,7 @@ const LoginBox = styled.div`
   padding: 2rem;
   position: relative;
   z-index: 10;
+  margin-top: 30px;
 
   .idBox {
     width: 100%;
@@ -132,6 +133,7 @@ const TitleBox = styled.div`
     top: 120px;
     width: 150px;
     z-index: 1;
+    margin-top: 30px;
   }
 `
 
@@ -148,6 +150,7 @@ const Ballon = styled.div`
     justify-content: center;
     align-items: center;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin-top: 60px;
 
     ::after{
       content: '';
