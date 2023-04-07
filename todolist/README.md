@@ -21,11 +21,14 @@ https://user-images.githubusercontent.com/77611460/229392414-0c8d2abe-4a3e-4881-
 - todo CRUD
 - todo 초기화 
 - 달력에서 완료 todo 확인 기능
+
     ㄴ 완료한 일정이 있는 날은 빨간 점으로 표시
 - memo CRUD
 - 회원가입, 로그인, 로그아웃 기능
+
     ㄴ json-server 이용
 - 글꼴 변화 기능
+
     ㄴ 아직 전역으로 설정은 안된다..
 - 데이터 받아오기 전까지 로딩화면 구현
 - Menu 기능 구현
