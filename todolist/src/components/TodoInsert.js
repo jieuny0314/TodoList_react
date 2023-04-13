@@ -1,6 +1,6 @@
 // 새로운 할 일(Todo)을 추가할 수 있는 컴포넌트
 
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { todoInsert } from '../reducer/Todo';
 import styled from 'styled-components';

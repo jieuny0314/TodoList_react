@@ -15,7 +15,7 @@ const CalendarContainer = styled.div`
   height: 844px;
   background-color: #FEFCF3;
   color: #1B1A17;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   border-radius: 15px;
 
   .flexBox {
@@ -46,7 +46,9 @@ const CalendarContainer = styled.div`
       :hover {
         border: 2px solid #DBA39A;
       }
+
     }
+    
     .checked {
         border: 2px solid #DBA39A;
       }

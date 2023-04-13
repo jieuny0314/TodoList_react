@@ -6,8 +6,6 @@ import { FiSquare, FiCheckSquare } from "react-icons/fi";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiPencil } from "react-icons/bi";
 import { useState } from 'react';
-import { isEmpty } from 'ramda';
-import { useIsPresent } from 'framer-motion';
 
 const TodoItemBox = styled.div`
   display: flex;
