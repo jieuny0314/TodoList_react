@@ -8,7 +8,7 @@ const Template = styled.div`
   width: 390px;
   height: 844px;
   background-color: #F5EBE0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   display: flex;
   justify-content: center;
   align-items: center;

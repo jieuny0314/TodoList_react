@@ -2,10 +2,8 @@
 
 import React from "react";
 import TodoItem from './TodoItem';
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import useFetch from "../util/useFetch";
-import { BsDatabaseDash } from "react-icons/bs";
 import moment from "moment";
 import { SyncLoader } from "react-spinners";
 

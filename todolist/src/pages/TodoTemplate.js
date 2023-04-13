@@ -23,7 +23,7 @@ const Template = styled.div`
   background-color: #FEFCF3;
   padding: 10px;
   border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   overflow: hidden;
 
   .hide-menu{
@@ -239,6 +239,7 @@ function TodoTemplate({children, font, setFont}){
 
   const toggleMenu = () => {
     setMenuOn(!menuOn);
+    console.log("깃 플로우 연습");
   }
 
   const toggleImg = () => {

@@ -50,15 +50,21 @@
     },
     {
       "id": 9,
-      "text": "쳇바퀴 굴리기",
+      "text": "밥 먹기",
       "isCompleted": false,
-      "createdDate": "2023-03-31"
+      "createdDate": "2023-04-03"
     },
     {
       "id": 10,
-      "text": "밥 왕창 먹기",
+      "text": "행복하기",
+      "isCompleted": true,
+      "createdDate": "2023-04-03"
+    },
+    {
+      "id": 11,
+      "text": "안녕",
       "isCompleted": false,
-      "createdDate": "2023-03-31"
+      "createdDate": "2023-04-05"
     }
   ],
   "memos": [
@@ -83,11 +89,7 @@
   ],
   "information": [
     {
-      "id": "1234",
-      "password": "1234"
-    },
-    {
-      "id": "12345",
+      "id": "김지은",
       "password": "12345"
     }
   ]
